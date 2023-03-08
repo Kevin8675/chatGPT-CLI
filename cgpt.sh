@@ -1,5 +1,14 @@
 #!/bin/bash
 
+# Handle Errors
+function error {
+    if echo "$1" | jq -e '.error' >/dev/null; then
+        echo -e "OpenAI API request failed: $(echo $1 | jq -r '.error.type')"
+        echo $1 | jq -r '.error.message'
+        exit 1
+    fi
+}
+
 # Create config file if not found
 if [ ! -f $HOME/.config/cgpt/cgpt.conf ]; then
     if [ ! -d $HOME/.config/cgpt ]; then
@@ -81,6 +90,9 @@ while true; do
             \"messages\": [$messages]
         }"
     )
+
+    # Check for errors
+    error "$response"
 
     # Extract ChatGPT response message from API response
     response_msg=$(echo $response | jq -r '.choices[].message.content')

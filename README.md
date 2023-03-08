@@ -23,7 +23,8 @@ Simply run the *cgpt.sh* file in terminal to start a chat. On first run (or if n
 ```
 
 ## To do list
-- [ ] Add error parser
+- [*] Add error parser
+- [ ] Auto escape special symbols
 - [ ] Add install script
 - [ ] Change user name setting
 - [ ] Add presets for different personalities
